@@ -1,3 +1,5 @@
+package dizzy;
+
 /**
  * Created by dizzy on 21.12.17.
  */
