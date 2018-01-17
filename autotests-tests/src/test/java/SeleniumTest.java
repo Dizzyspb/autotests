@@ -30,7 +30,7 @@ public class SeleniumTest {
         input__control.sendKeys("Колобашкин");
         input__control.submit();
 
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(2); // правильный title показывается на странице не сразу
 
         String title = driver.getTitle();
         String expectedTitle = "Яндекс";
