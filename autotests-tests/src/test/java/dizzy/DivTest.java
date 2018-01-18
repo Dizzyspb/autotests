@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class DivTest {
 
     @Test
-    public void testCalculationDiv(){
+    public void testCalculationDiv() {
         Calculator calculator = new Calculator();
         int a = 20;
         int b = 10;
