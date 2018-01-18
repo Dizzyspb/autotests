@@ -1,3 +1,5 @@
+package dizzy;
+
 import dizzy.Calculator;
 import org.junit.Test;
 
@@ -13,7 +15,6 @@ public class DivTest {
         Calculator calculator = new Calculator();
         int a = 20;
         int b = 10;
-
         int result = 2;
 
         assertEquals(result, calculator.div(a, b));

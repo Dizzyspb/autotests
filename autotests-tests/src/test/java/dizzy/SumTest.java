@@ -1,3 +1,5 @@
+package dizzy;
+
 import dizzy.Calculator;
 import org.junit.Test;
 
@@ -15,68 +17,48 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SumTest {
 
-    @Test
-    public void testCalculationSum(){
-        Calculator calculator = new Calculator();
-        int a = 10;
-        int b = 17;
+    int a = 10;
+    int b = 17;
+    int result = 27;
 
-        int result = 27;
+    Calculator calculator = new Calculator();
+
+    @Test
+    public void testCalculationSum() {
 
         assertEquals(result, calculator.sum(a, b));
     }
 
     @Test
-    public void testCalculationSumHamcrest1(){
-        Calculator calculator = new Calculator();
-        int a = 10;
-        int b = 17;
-
-        int result = 27;
+    public void testCalculationSumHamcrest1() {
 
         assertThat(result, is(calculator.sum(a, b)));
     }
 
     @Test
-    public void testCalculationSumHamcrest2(){
+    public void testCalculationSumHamcrest2() {
         Calculator calculator = new Calculator();
-        int a = 10;
-        int b = 17;
-
-        int result = 27;
 
         assertThat(result, equalTo(calculator.sum(a, b)));
     }
 
     @Test
-    public void testCalculationSumHamcrest3(){
+    public void testCalculationSumHamcrest3() {
         Calculator calculator = new Calculator();
-        int a = 10;
-        int b = 17;
-
-        int result = 27;
 
         assertThat(result, is(equalTo(calculator.sum(a, b))));
     }
 
     @Test
-    public void testCalculationAssertJ1(){
+    public void testCalculationAssertJ1() {
         Calculator calculator = new Calculator();
-        int a = 10;
-        int b = 17;
-
-        int result = 27;
 
         assertEquals(result, calculator.sum(a, b));
     }
 
     @Test
-    public void testCalculationAssertJ2(){
+    public void testCalculationAssertJ2() {
         Calculator calculator = new Calculator();
-        int a = 10;
-        int b = 17;
-
-        int result = 27;
 
         assertThat(result).isEqualTo(calculator.sum(a, b));
     }
