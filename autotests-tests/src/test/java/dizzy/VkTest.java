@@ -4,7 +4,6 @@ package dizzy;
  * Created by dizzy on 18.01.18.
  */
 
-
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -13,11 +12,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class VkTest {
@@ -26,10 +32,21 @@ public class VkTest {
 
 
     @Before
-    public void driver() {
+    public void driver() throws MalformedURLException {
         //driver = new SafariDriver();
-        driver = new ChromeDriver();
+        //driver = new ChromeDriver();
 
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("start-maximized");
+        options.setBinary(new File("/"));
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("63.0");
+        capabilities.setCapability("enableVNC", true);
+
+        driver = new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
+                capabilities);
     }
 
     @After
