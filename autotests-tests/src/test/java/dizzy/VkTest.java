@@ -162,8 +162,6 @@ public class VkTest {
         // Ищем строку для ввода текста и кнопку Отправить
 
         WebElement inputText = driver.findElement(By.xpath("//div[@class='im_editable im-chat-input--text _im_text']"));
-        WebElement sendButton = driver.findElement(By.xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
-
 
         for (int i = 0; i < 10; ++i) {
 
@@ -172,6 +170,7 @@ public class VkTest {
             inputText.sendKeys("Test " + i);
 
             //Нажимаем кнопку "Отправить
+            WebElement sendButton = driver.findElement(By.xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
             sendButton.click();
             TimeUnit.SECONDS.sleep(1);
         }
