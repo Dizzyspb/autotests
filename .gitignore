@@ -15,3 +15,6 @@ testing.properties
 node
 node_modules
 etc
+
+# properties
+ServerConfig.properties
