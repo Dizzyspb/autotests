@@ -212,7 +212,7 @@ public class VkTest {
 
         System.out.println(driver.getTitle());
 
-        TimeUnit.SECONDS.sleep(5);
+        //TimeUnit.SECONDS.sleep(5);
 
     }
 }
