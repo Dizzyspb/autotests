@@ -8,6 +8,8 @@ import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,13 +25,32 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.runners.Parameterized.*;
+
+
+@RunWith(value = Parameterized.class)
 
 public class VkTest {
 
     WebDriver driver;
 
+    String sendText;
+
+    public VkTest(String sendText) {
+        this.sendText = sendText;
+    }
+
+    @Parameters
+    public static Collection<Object[]> data() {
+        Object[][] data = new Object[][]{
+                {"От"}, {"топота"}, {"копыт"}, {"пыль"}, {"по"}, {"полю"}, {"летит"}
+        };
+        return Arrays.asList(data);
+    }
 
     @Before
     public void driver() throws MalformedURLException {
@@ -56,6 +77,7 @@ public class VkTest {
 
     @Test
     public void send10MessagesToTheArtem() throws InterruptedException {
+
 
         ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
 
@@ -175,22 +197,18 @@ public class VkTest {
             }
         });
 
-
         // Ищем строку для ввода текста и кнопку Отправить
 
         WebElement inputText = driver.findElement(By.xpath("//div[@class='im_editable im-chat-input--text _im_text']"));
 
-        for (int i = 0; i < 10; ++i) {
+        //Вводим произвольный текст
+        inputText.clear();
+        inputText.sendKeys(sendText);
 
-            //Вводим произвольный текст
-            inputText.clear();
-            inputText.sendKeys("Test " + i);
-
-            //Нажимаем кнопку "Отправить
-            WebElement sendButton = driver.findElement(By.xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
-            sendButton.click();
-            TimeUnit.SECONDS.sleep(1);
-        }
+        //Нажимаем кнопку "Отправить
+        WebElement sendButton = driver.findElement(By.xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
+        sendButton.click();
+        TimeUnit.SECONDS.sleep(1);
 
         System.out.println(driver.getTitle());
 
