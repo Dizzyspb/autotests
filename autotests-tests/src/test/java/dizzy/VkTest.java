@@ -111,17 +111,6 @@ public class VkTest {
         WebElement myPage = driver.findElement(By.xpath("//div[@id='side_bar']//li[@id='l_pr']"));
         myPage.click();
 
-        //Закрываем pop-up
-        /*System.out.println(driver.getTitle());
-        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//div[@class='eltt feature_intro_tt eltt_arrow_size_normal eltt_right eltt_vis']//div[@class='feature_intro_tt_hide']")).isDisplayed();
-            }
-        });
-
-        WebElement closePopup = driver.findElement(By.xpath("//div[@id='side_bar']//li[@id='l_pr']"));
-        closePopup.click();
-*/
         //Переходим в "Сообщения"
         WebElement myMessages = driver.findElement(By.xpath("//div[@id='side_bar']//li[@id='l_msg']"));
         myMessages.click();
@@ -213,6 +202,18 @@ public class VkTest {
         System.out.println(driver.getTitle());
 
         //TimeUnit.SECONDS.sleep(5);
+
+        //Закрываем pop-up
+        /*System.out.println(driver.getTitle());
+        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+                return d.findElement(By.xpath("//div[@class='eltt feature_intro_tt eltt_arrow_size_normal eltt_right eltt_vis']//div[@class='feature_intro_tt_hide']")).isDisplayed();
+            }
+        });
+
+        WebElement closePopup = driver.findElement(By.xpath("//div[@id='side_bar']//li[@id='l_pr']"));
+        closePopup.click();
+        */
 
     }
 }
