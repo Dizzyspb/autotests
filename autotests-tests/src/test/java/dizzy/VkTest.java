@@ -32,6 +32,29 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.runners.Parameterized.*;
 
 
+@Before
+public void driver()throws MalformedURLException{
+        //driver = new SafariDriver();
+        //driver = new ChromeDriver();
+
+        ChromeOptions options=new ChromeOptions();
+        options.addArguments("start-maximized");
+        options.setBinary(new File("/"));
+
+        DesiredCapabilities capabilities=new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("63.0");
+        capabilities.setCapability("enableVNC",true);
+
+        driver=new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
+        capabilities);
+        }
+
+@After
+public void exitDriver(){
+        driver.quit();
+        }
+
 @RunWith(value = Parameterized.class)
 
 public class VkTest {
@@ -50,29 +73,6 @@ public class VkTest {
                 {"От"}, {"топота"}, {"копыт"}, {"пыль"}, {"по"}, {"полю"}, {"летит"}
         };
         return Arrays.asList(data);
-    }
-
-    @Before
-    public void driver() throws MalformedURLException {
-        //driver = new SafariDriver();
-        //driver = new ChromeDriver();
-
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
-        options.setBinary(new File("/"));
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
-        capabilities.setVersion("63.0");
-        capabilities.setCapability("enableVNC", true);
-
-        driver = new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
-                capabilities);
-    }
-
-    @After
-    public void exitDriver() {
-        driver.quit();
     }
 
     @Test
@@ -129,11 +129,16 @@ public class VkTest {
         System.out.println(driver.getTitle());
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//div[@id='page_body']//div[@id='wrap3']//div[@class='im-page--header ui_search _im_dialogs_search']//div[@class='im-dialog-select im-dialog-select_classic _im_search_croll']//button[@class='im-dialog-select--btn']")).isDisplayed();
+                return d
+                        .findElement(By
+                                .xpath("//div[@id='page_body']//div[@id='wrap3']//div[@class='im-page--header ui_search _im_dialogs_search']//div[@class='im-dialog-select im-dialog-select_classic _im_search_croll']//button[@class='im-dialog-select--btn']"))
+                        .isDisplayed();
             }
         });
 
-        WebElement startTalking = driver.findElement(By.xpath("//div[@id='page_body']//div[@id='wrap3']//div[@class='im-page--header ui_search _im_dialogs_search']//div[@class='im-dialog-select im-dialog-select_classic _im_search_croll']//button[@class='im-dialog-select--btn']"));
+        WebElement startTalking = driver
+                .findElement(By
+                        .xpath("//div[@id='page_body']//div[@id='wrap3']//div[@class='im-page--header ui_search _im_dialogs_search']//div[@class='im-dialog-select im-dialog-select_classic _im_search_croll']//button[@class='im-dialog-select--btn']"));
         startTalking.click();
 
 
@@ -141,11 +146,16 @@ public class VkTest {
 
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//ul[@class='ui_tabs clear_fix ']//button[@class='im-dialog-select--btn']")).isDisplayed();
+                return d
+                        .findElement(By
+                                .xpath("//ul[@class='ui_tabs clear_fix ']//button[@class='im-dialog-select--btn']"))
+                        .isDisplayed();
             }
         });
 
-        WebElement addMember = driver.findElement(By.xpath("//ul[@class='ui_tabs clear_fix ']//button[@class='im-dialog-select--btn']"));
+        WebElement addMember = driver
+                .findElement(By
+                        .xpath("//ul[@class='ui_tabs clear_fix ']//button[@class='im-dialog-select--btn']"));
 
         //Вводим cfg.sendToUser() в поиске
 
@@ -179,7 +189,10 @@ public class VkTest {
         // Кликаем на "Перейти к диалогу"
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']")).isDisplayed();
+                return d
+                        .findElement(By
+                                .xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']"))
+                        .isDisplayed();
             }
         });
 
@@ -188,25 +201,35 @@ public class VkTest {
         //goToDialog.click();
 
         Actions action = new Actions(driver);
-        action.moveToElement(driver.findElement(By.xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']"))).click().build().perform();
+        action.moveToElement(driver
+                .findElement(By
+                        .xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']")))
+                .click().build().perform();
 
         //Дожидаемся открытия диалога
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//span[@class='im-page--title-main-in']//a[text()='Александр Спешнев']")).isDisplayed();
+                return d
+                        .findElement(By
+                                .xpath("//span[@class='im-page--title-main-in']//a[text()='Александр Спешнев']"))
+                        .isDisplayed();
             }
         });
 
         // Ищем строку для ввода текста и кнопку Отправить
 
-        WebElement inputText = driver.findElement(By.xpath("//div[@class='im_editable im-chat-input--text _im_text']"));
+        WebElement inputText = driver
+                .findElement(By
+                        .xpath("//div[@class='im_editable im-chat-input--text _im_text']"));
 
         //Вводим произвольный текст
         inputText.clear();
         inputText.sendKeys(sendText);
 
         //Нажимаем кнопку "Отправить
-        WebElement sendButton = driver.findElement(By.xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
+        WebElement sendButton = driver
+                .findElement(By
+                        .xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
         sendButton.click();
         TimeUnit.SECONDS.sleep(1);
 
