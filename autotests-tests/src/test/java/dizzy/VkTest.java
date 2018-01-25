@@ -25,6 +25,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -83,6 +85,10 @@ public class VkTest {
 
 
         ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
+
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+        final String formattedDate = sdf.format(date);
 
         String appUrl = "https://www.vk.com";
         driver.get(appUrl);
@@ -184,25 +190,24 @@ public class VkTest {
 
         //Вводим произвольный текст
         inputText.clear();
-        inputText.sendKeys(sendText);
+        inputText.sendKeys(sendText + " " + formattedDate);
 
         //Нажимаем кнопку "Отправить
         WebElement sendButton = driver.findElement(By.xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
         sendButton.click();
-        //TimeUnit.SECONDS.sleep(1);
 
         //Дожидаемся отправки сообщения
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText +"']")).isDisplayed();
+                return d.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText + " " + formattedDate + "']")).isDisplayed();
             }
         });
 
         System.out.println(driver.getTitle());
         System.out.println(sendText);
 
-        resultText = driver.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText +"']"));
-        assertThat(resultText.getText(), equalTo(sendText));
+        resultText = driver.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText + " " + formattedDate + "']"));
+        assertThat(resultText.getText(), equalTo(sendText + " " + formattedDate));
 
 
         //Deprecated
