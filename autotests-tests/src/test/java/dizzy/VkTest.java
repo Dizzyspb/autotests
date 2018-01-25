@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.runners.Parameterized.*;
 
 
@@ -39,6 +41,7 @@ public class VkTest {
     WebDriver driver;
 
     String sendText;
+    WebElement resultText;
 
     public VkTest(String sendText) {
         this.sendText = sendText;
@@ -172,19 +175,8 @@ public class VkTest {
             }
         });
 
-        //System.out.println(driver.findElements(By.xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']")).size());
-        //WebElement goToDialog = driver.findElement(By.xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']"));
-        //goToDialog.click();
-
         Actions action = new Actions(driver);
         action.moveToElement(driver.findElement(By.xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']"))).click().build().perform();
-
-        //Дожидаемся открытия диалога
-        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//span[@class='im-page--title-main-in']//a[text()='Александр Спешнев']")).isDisplayed();
-            }
-        });
 
         // Ищем строку для ввода текста и кнопку Отправить
 
@@ -197,9 +189,23 @@ public class VkTest {
         //Нажимаем кнопку "Отправить
         WebElement sendButton = driver.findElement(By.xpath("//button[@class='im-send-btn im-chat-input--send _im_send im-send-btn_send']"));
         sendButton.click();
-        TimeUnit.SECONDS.sleep(1);
+        //TimeUnit.SECONDS.sleep(1);
+
+        //Дожидаемся отправки сообщения
+        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+                return d.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText +"']")).isDisplayed();
+            }
+        });
 
         System.out.println(driver.getTitle());
+        System.out.println(sendText);
+
+        resultText = driver.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText +"']"));
+        assertThat(resultText.getText(), equalTo(sendText));
+
+
+        //Deprecated
 
         //TimeUnit.SECONDS.sleep(5);
 
@@ -213,6 +219,17 @@ public class VkTest {
 
         WebElement closePopup = driver.findElement(By.xpath("//div[@id='side_bar']//li[@id='l_pr']"));
         closePopup.click();
+
+        //System.out.println(driver.findElements(By.xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']")).size());
+        //WebElement goToDialog = driver.findElement(By.xpath("//div[@class='im-create--footer ui_grey_block']//button[text()='Перейти к диалогу']"));
+        //goToDialog.click();
+
+        //Дожидаемся открытия диалога
+        (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+                return d.findElement(By.xpath("//span[@class='im-page--title-main-in']//a[text()='Александр Спешнев']")).isDisplayed();
+            }
+        });
         */
 
     }
