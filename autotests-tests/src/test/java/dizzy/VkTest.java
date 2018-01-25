@@ -58,7 +58,7 @@ public class VkTest {
     @Before
     public void driver() throws MalformedURLException {
         //driver = new SafariDriver();
-        //driver = new ChromeDriver();
+        driver = new ChromeDriver();
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
@@ -69,8 +69,8 @@ public class VkTest {
         capabilities.setVersion("63.0");
         capabilities.setCapability("enableVNC", true);
 
-        driver = new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
-                capabilities);
+        //driver = new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
+        //        capabilities);
     }
 
     @After

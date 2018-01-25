@@ -1,7 +1,7 @@
 package dizzy;
 
 import org.junit.Test;
-import com.sun.org.glassfish.gmbal.Description;
+//import com.sun.org.glassfish.gmbal.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,9 +19,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SeleniumTest {
 
     @Test
-    @Description("1. Открываем страницу yandex.ru\n" +
-            "2. Выполняем поиск по запросу 'Колобашкин'\n" +
-            "3. Проверяем заголовок страницы")
+//    @Description("1. Открываем страницу yandex.ru\n" +
+//            "2. Выполняем поиск по запросу 'Колобашкин'\n" +
+//            "3. Проверяем заголовок страницы")
 
 
     public void shouldSeeTitle() throws InterruptedException {
