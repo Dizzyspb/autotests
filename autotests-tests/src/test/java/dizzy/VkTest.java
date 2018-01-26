@@ -29,7 +29,6 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -60,7 +59,7 @@ public class VkTest {
     @Before
     public void driver() throws MalformedURLException {
         //driver = new SafariDriver();
-        driver = new ChromeDriver();
+        //driver = new ChromeDriver();
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
@@ -71,8 +70,8 @@ public class VkTest {
         capabilities.setVersion("63.0");
         capabilities.setCapability("enableVNC", true);
 
-        //driver = new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
-        //        capabilities);
+        driver = new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
+                capabilities);
     }
 
     @After
@@ -87,7 +86,7 @@ public class VkTest {
         ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
 
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy H:mm:ss:SSS");
         final String formattedDate = sdf.format(date);
 
         String appUrl = "https://www.vk.com";
@@ -199,14 +198,14 @@ public class VkTest {
         //Дожидаемся отправки сообщения
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText + " " + formattedDate + "']")).isDisplayed();
+                return d.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='" + sendText + " " + formattedDate + "']")).isDisplayed();
             }
         });
 
         System.out.println(driver.getTitle());
         System.out.println(sendText);
 
-        resultText = driver.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='"+ sendText + " " + formattedDate + "']"));
+        resultText = driver.findElement(By.xpath("//li[last()]//div[@class='im-mess--text wall_module _im_log_body' and text()='" + sendText + " " + formattedDate + "']"));
         assertThat(resultText.getText(), equalTo(sendText + " " + formattedDate));
 
 
