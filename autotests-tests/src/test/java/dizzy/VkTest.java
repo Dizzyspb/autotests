@@ -11,14 +11,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -42,7 +43,6 @@ public class VkTest {
     WebDriver driver;
 
     String sendText;
-    WebElement resultText;
 
     public VkTest(String sendText) {
         this.sendText = sendText;
@@ -62,13 +62,13 @@ public class VkTest {
         //driver = new ChromeDriver();
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
         options.setBinary(new File("/"));
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
         capabilities.setVersion("63.0");
         capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", true);
 
         driver = new RemoteWebDriver(URI.create("http://localhost:4444/wd/hub").toURL(),
                 capabilities);
@@ -90,8 +90,10 @@ public class VkTest {
         final String formattedDate = sdf.format(date);
 
         String appUrl = "https://www.vk.com";
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         driver.get(appUrl);
 
+        WebElement resultText;
 
         //Логинимся в ВК
         WebElement email = driver.findElement(By.id("index_email"));
