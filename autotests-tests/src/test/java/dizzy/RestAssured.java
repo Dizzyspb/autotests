@@ -27,7 +27,7 @@ public class RestAssured {
                 .when()
                 .get("https://api.realty.test.vertis.yandex.net/1.0/phone/canCreateRedirect/4003976033?geoId=10945");
 
-        Boolean getRedirectValue = getRedirect.jsonPath().get("response.resulty[0].canCreateRedirect");
+        Boolean getRedirectValue = getRedirect.jsonPath().get("response.result[0].canCreateRedirect");
         assertThat(getRedirectValue).isEqualTo(false);
     }
 }
